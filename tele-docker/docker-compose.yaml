@@ -1,0 +1,48 @@
+version: '3.3'
+services:
+  tele-nginx:
+    image: nginx:latest
+    container_name: tele-nginx
+    ports:
+      - 80:80
+      - 443:80
+      - 88:80
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ../:/var/www
+      - ./nginx/logs:/var/log/nginx
+    links:
+      - tele-php
+
+  tele-php:
+    build: ./php
+    container_name: tele-php
+    volumes:
+      - ../:/var/www
+    links:
+      - tele-db
+      - tele-ngrok
+
+  tele-db:
+    image: mysql:8.0
+    ports:
+      - 3303:3306
+    container_name: tele-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=iraza
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+    volumes:
+      - ./db:/var/lib/mysql
+
+  tele-ngrok:
+    image: wernight/ngrok
+    container_name: tele-ngrok
+    ports:
+      - "4040:4040"
+    expose:
+      - "4040"
+    environment:
+      - NGROK_AUTH=1pmoysfJ36ECmKhdkCyV0yHtVxq_3QwdtFMs5jnDKtsYuFa2Y
+      - NGROK_PORT=tele-nginx:80

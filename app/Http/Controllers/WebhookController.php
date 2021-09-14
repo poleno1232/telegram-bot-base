@@ -16,11 +16,11 @@ class WebhookController extends Controller
         $bot = Telegram::bot();
         $this->service = new TelegramService();
 
-        $this->service->setData($bot, $update);
-
         if ($update->hasCommand()) {
             $bot->processCommand($update);
         } else {
+            $this->service->setData($bot, $update);
+
             if (isset($update['callback_query'])) {
                 $this->service->handleUpdates($update['callback_query']['data']);
             }

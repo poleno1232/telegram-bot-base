@@ -1,0 +1,19 @@
+<?php
+
+namespace {{namespace}};
+
+use Telegram\Bot\Laravel\Facades\Telegram;
+use Telegram\Bot\Objects\Update;
+
+class {{class}} extends AbstractHandler
+{
+    protected function trigger(): bool
+    {
+        return true;
+    }
+
+    public function process(Update $update)
+    {
+        //
+    }
+}

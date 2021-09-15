@@ -2,9 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Exceptions\TelegramUpdateException;
 use App\Services\TelegramService;
-use App\Telegram\Commands\AbstractCommand;
 use BadMethodCallException;
 use Illuminate\Console\Command;
 use Telegram\Bot\Api as TelegramBot;
